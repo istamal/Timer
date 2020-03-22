@@ -1,0 +1,45 @@
+.ant-tabs {
+  width: 300px;
+  margin: auto !important;
+}
+
+.start, .reset {
+  width: 100px;
+  height: 30px;
+  border: none;
+  background-color: #3af;
+  color: #fff;
+  outline: none;
+  border-radius: 3px;
+}
+
+.start:hover {
+  background-color: #3cf;
+}
+
+.reset {
+  margin-left: 100px;
+  background-color: #3a6;
+}
+
+.reset:hover {
+  background-color: #4c6;
+}
+
+.reset:active {
+  background: #063;
+}
+
+.timer {
+  font-size: 50px;
+  text-align: center;
+}
+
+.red {
+  background-color: #f26;
+}
+
+.red:hover {
+  background-color: #f56;
+}
+
