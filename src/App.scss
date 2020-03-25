@@ -3,6 +3,34 @@
   margin: auto !important;
 }
 
+.progress {
+  margin-top: 30px;
+  margin: 30px auto;
+  width: 120px;
+}
+
+.custom-input {
+  box-sizing: border-box;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: 'tnum', "tnum";
+  position: relative;
+  min-width: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  transition: all 0.3s;
+  display: inline-block;
+  width: 90px;
+  height: 30px;
+  margin: 0;
+  padding: 0 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
 .start, .reset {
   width: 100px;
   height: 30px;
@@ -42,4 +70,3 @@
 .red:hover {
   background-color: #f56;
 }
-

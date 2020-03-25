@@ -15,11 +15,25 @@ export class IntegerStep extends React.Component {
     };
   }
 
-  onChange = value => {
+  onSliderChange = (value) => {
     this.props.updateMinutes(value);
     this.setState({
       inputValue: value,
     });
+  }
+
+  onChange = (e) => {
+    const { value } = e.target;
+    if ( parseInt(value) > 720) {
+      this.setState({
+        inputValue: 720,
+      });
+    } else {
+      this.props.updateMinutes(value);
+      this.setState({
+        inputValue: value,
+      });
+    }
   };
 
   render() {
@@ -31,14 +45,15 @@ export class IntegerStep extends React.Component {
           <Slider
             disabled={isCliked}
             min={0}
-            max={60}
-            onChange={this.onChange}
+            max={720}
+            onChange={this.onSliderChange}
             value={typeof inputValue === 'number' ? inputValue : 0}
           />
-          <InputNumber
+          <input
+            className="custom-input"
             disabled={isCliked}
             min={0}
-            max={60}
+            max={720}
             type="number"
             required
             value={inputValue}
@@ -54,7 +69,7 @@ export class DecimalStep extends React.Component {
     inputValue: 0,
   };
 
-  onChange = value => {
+  onSliderChange = value => {
     this.props.updateSeconds(value);
     if (isNaN(value)) {
       return;
@@ -62,6 +77,20 @@ export class DecimalStep extends React.Component {
     this.setState({
       inputValue: value,
     });
+  };
+
+  onChange = (e) => {
+    const { value } = e.target;
+    if ( parseInt(value) > 60) {
+      this.setState({
+        inputValue: 60,
+      });
+    } else {
+      this.props.updateSeconds(value);
+      this.setState({
+        inputValue: value,
+      });
+    }
   };
 
   render() {
@@ -75,10 +104,11 @@ export class DecimalStep extends React.Component {
             min={0}
 						max={60}
 						step={15}
-            onChange={this.onChange}
+            onChange={this.onSliderChange}
             value={typeof inputValue === 'number' ? inputValue : 0}
           />
-          <InputNumber
+          <input
+            className="custom-input"
             disabled={isCliked}
             min={0}
 						max={60}
