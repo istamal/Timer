@@ -1,4 +1,5 @@
 import React from 'react';
+import 'antd/dist/antd.css';
 import cn from 'classnames';
 
 export class Timer extends React.Component {

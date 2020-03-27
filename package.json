@@ -7,8 +7,10 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.0.3",
+    "babel-eslint": "^10.1.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "node-sass": "^4.13.1",
+    "prettier": "^2.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -19,12 +21,13 @@
     "babel-preset-airbnb": "^4.4.0",
     "babel-tape-runner": "^3.0.0",
     "eclint": "^2.8.1",
-    "eslint": "^5.16.0 || ^6.8.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
     "eslint-find-rules": "^3.4.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^2.3.0 || ^1.7.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "in-publish": "^2.0.0",
     "react": ">= 0.13.0",
     "safe-publish-latest": "^1.1.4",
@@ -38,6 +41,8 @@
     "eslint-plugin-react-hooks": "^2.3.0 || ^1.7.0"
   },
   "scripts": {
+    "eslint": "node_modules/.bin/eslint src/",
+    "eslint:fix": "eslint . --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -57,5 +62,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test",
+      "...": "..."
+    }
   }
 }
