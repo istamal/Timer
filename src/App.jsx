@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React from 'react';
 import './App.scss';
 import 'antd/dist/antd.css';

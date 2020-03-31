@@ -10,59 +10,36 @@ InputNumber.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default class DecimalStep extends React.Component {
-  state = {
-    inputValue: 0,
-  };
+const DecimalStep = (props) => {
+  const {
+    isCliked,
+    handleSlider,
+    handleInput,
+    seconds,
+  } = props;
 
-  onSliderChange = (value) => {
-    const { updateSeconds } = this.props;
-    updateSeconds(parseInt(value));
-    this.setState({
-      inputValue: value,
-    });
-  };
+  return (
+    <div>
+      <Slider
+        disabled={isCliked}
+        min={0}
+        max={60}
+        step={15}
+        onChange={handleSlider}
+        value={seconds}
+      />
+      <input
+        className="custom-input"
+        disabled={isCliked}
+        min={0}
+        max={60}
+        step={15}
+        type="number"
+        value={seconds}
+        onChange={handleInput}
+      />
+    </div>
+  );
+};
 
-  onChange = (event) => {
-    const { updateSeconds } = this.props;
-    const { value } = event.target;
-    if (parseInt(value) > 60) {
-      this.setState({
-        inputValue: 60,
-      });
-    } else {
-      updateSeconds(Number(value));
-      this.setState({
-        inputValue: value,
-      });
-    }
-  };
-
-  render() {
-    const { inputValue } = this.state;
-    const { isCliked } = this.props;
-
-    return (
-      <div>
-        <Slider
-          disabled={isCliked}
-          min={0}
-          max={60}
-          step={15}
-          onChange={this.onSliderChange}
-          value={inputValue}
-        />
-        <input
-          className="custom-input"
-          disabled={isCliked}
-          min={0}
-          max={60}
-          step={15}
-          type="number"
-          value={inputValue}
-          onChange={this.onChange}
-        />
-      </div>
-    );
-  }
-}
+export default DecimalStep;
