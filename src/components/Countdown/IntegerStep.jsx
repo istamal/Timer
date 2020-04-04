@@ -1,22 +1,17 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable radix */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Slider } from 'antd';
+import PropTypes from 'prop-types';
 
 const IntegerStep = (props) => {
   const {
-    isCliked,
-    handleSlider,
-    handleInput,
-    minutes,
+    isCountdownStarted, handleSlider, handleInput, minutes,
   } = props;
 
   return (
     <div>
       <Slider
-        disabled={isCliked}
+        disabled={isCountdownStarted}
         min={0}
         max={720}
         onChange={handleSlider}
@@ -24,7 +19,7 @@ const IntegerStep = (props) => {
       />
       <input
         className="custom-input"
-        disabled={isCliked}
+        disabled={isCountdownStarted}
         min={0}
         max={720}
         type="number"
@@ -33,6 +28,13 @@ const IntegerStep = (props) => {
       />
     </div>
   );
+};
+
+IntegerStep.propTypes = {
+  isCountdownStarted: PropTypes.bool.isRequired,
+  handleSlider: PropTypes.func.isRequired,
+  handleInput: PropTypes.func.isRequired,
+  minutes: PropTypes.number.isRequired,
 };
 
 export default IntegerStep;

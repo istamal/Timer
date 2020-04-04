@@ -1,9 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-/* eslint-disable no-shadow */
-/* eslint-disable consistent-return */
-/* eslint-disable indent */
-/* eslint-disable no-tabs */
 import React from 'react';
 import { Progress } from 'antd';
 import cn from 'classnames';
@@ -13,66 +7,59 @@ import DecimalStep from './DecimalStep';
 export default class Countdown extends React.Component {
   constructor(props) {
     super(props);
-    this.wrapper = React.createRef();
     this.state = {
-      isCliked: false,
+      isCountdownStarted: false,
       startTime: 0,
       time: 0,
     };
     this.timer = 0;
+    this.counter = 0;
   }
 
-  resetTimer = () => {
-    const { isCliked } = this.state;
-    if (isCliked) {
-      clearInterval(this.timer);
-      this.setState({ isCliked: false });
-    } else {
-      this.setState({
-        startTime: 0,
-        time: 0,
-      });
-    }
+  handleSecondsSlider = (value) => {
+    this.setState({ time: value, startTime: value });
   };
 
-  handleSecondsSlider = value => {
-    const { time } = this.state;
-    console.log(value);
-    if (+value <= 60) {
-      this.setState({ time: time + +value, startTime: time + +value });
-    }
+  handleSecondsInput = (event) => {
+    const { value } = event.target;
+    this.setState({ time: value, startTime: value });
   };
 
-  handleMinutesSlider = value => {
+  handleMinutesSlider = (value) => {
     this.setState({ time: value * 60, startTime: value * 60 });
   };
 
-  handleSecondsInput = event => {
-    const { value } = event.target;
-    const { time } = this.state;
-    if (+value <= 45) {
-      this.setState({ time: time + +value, startTime: time + +value });
-    }
-  };
-
-  handleMinutesInput = event => {
+  handleMinutesInput = (event) => {
     const { value } = event.target;
     if (Number(value) <= 720) {
       this.setState({ time: value * 60, startTime: value * 60 });
     }
   };
 
-  handleStopCountdown = () => {
-    clearInterval(this.timer);
-    this.setState({ isCliked: false });
-  };
-
-  handleCountdown = () => {
+  startCountdown = () => {
     this.setState({
-      isCliked: true,
+      isCountdownStarted: true,
     });
 
     this.timer = setInterval(this.countDown, 1000);
+  };
+
+  stopCountdown = () => {
+    clearInterval(this.timer);
+    this.setState({ isCountdownStarted: false });
+  };
+
+  resetCountdown = () => {
+    const { isCountdownStarted } = this.state;
+    if (isCountdownStarted) {
+      clearInterval(this.timer);
+      this.setState({ isCountdownStarted: false });
+    } else {
+      this.setState({
+        startTime: 0,
+        time: 0,
+      });
+    }
   };
 
   countDown = () => {
@@ -83,24 +70,22 @@ export default class Countdown extends React.Component {
       this.audio.load();
       this.playAudio();
       clearInterval(this.timer);
-      this.setState({ isCliked: false, startTime: 0, time: 0 });
+      this.setState({ isCountdownStarted: false, startTime: 0, time: 0 });
     }
   };
 
   playAudio() {
     this.audio
       .play()
-      .then(file => {
-        console.log(file);
-      })
-      .catch(err => console.info(err));
+      .then(() => {})
+      .catch((err) => err);
   }
 
   render() {
-    const { startTime, isCliked, time } = this.state;
+    const { startTime, isCountdownStarted, time } = this.state;
 
-    const value = isCliked ? 'Остановить' : 'Запустить';
-    const zero = num => (num < 10 ? 0 : '');
+    const value = isCountdownStarted ? 'Остановить' : 'Запустить';
+    const zero = (num) => (num < 10 ? 0 : '');
 
     const userSeconds = time % 60;
     const userMinutes = (time - userSeconds) / 60;
@@ -108,27 +93,29 @@ export default class Countdown extends React.Component {
     const percent = Math.round((timeLeft / startTime) * 100);
 
     const classList = cn({
-      red: isCliked,
+      red: isCountdownStarted,
       start: true,
     });
 
     return (
       <div ref={this.wrapper}>
         <IntegerStep
-          isCliked={isCliked}
+          isCountdownStarted={isCountdownStarted}
           minutes={Math.floor(time / 60)}
           handleSlider={this.handleMinutesSlider}
           handleInput={this.handleMinutesInput}
         />
         <DecimalStep
-          isCliked={isCliked}
-          seconds={time % 60}
+          isCountdownStarted={isCountdownStarted}
+          seconds={time}
           handleSlider={this.handleSecondsSlider}
           handleInput={this.handleSecondsInput}
         />
-        <h1 className="timer">{`${zero(userMinutes)}${userMinutes} : ${zero(
-          userSeconds,
-        )}${userSeconds}`}</h1>
+        <h1 className="timer">
+          {`${zero(userMinutes)}${userMinutes} : ${zero(
+            userSeconds,
+          )}${userSeconds}`}
+        </h1>
         <div className="progress">
           <Progress
             type="circle"
@@ -142,11 +129,11 @@ export default class Countdown extends React.Component {
         <button
           type="button"
           className={classList}
-          onClick={isCliked ? this.handleStopCountdown : this.handleCountdown}
+          onClick={isCountdownStarted ? this.stopCountdown : this.startCountdown}
         >
           {value}
         </button>
-        <button type="button" className="reset" onClick={this.resetTimer}>
+        <button type="button" className="reset" onClick={this.resetCountdown}>
           Сбросить
         </button>
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
