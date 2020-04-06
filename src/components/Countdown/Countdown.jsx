@@ -2,7 +2,6 @@ import React from 'react';
 import { Progress } from 'antd';
 import cn from 'classnames';
 import IntegerStep from './IntegerStep';
-import DecimalStep from './DecimalStep';
 
 export default class Countdown extends React.Component {
   constructor(props) {
@@ -15,10 +14,6 @@ export default class Countdown extends React.Component {
     this.timer = 0;
     this.counter = 0;
   }
-
-  handleSecondsSlider = (value) => {
-    this.setState({ time: value, startTime: value });
-  };
 
   handleSecondsInput = (event) => {
     const { value } = event.target;
@@ -102,19 +97,13 @@ export default class Countdown extends React.Component {
         <IntegerStep
           isCountdownStarted={isCountdownStarted}
           minutes={Math.floor(time / 60)}
+          seconds={time}
           handleSlider={this.handleMinutesSlider}
           handleInput={this.handleMinutesInput}
-        />
-        <DecimalStep
-          isCountdownStarted={isCountdownStarted}
-          seconds={time}
-          handleSlider={this.handleSecondsSlider}
-          handleInput={this.handleSecondsInput}
+          handleInputSeconds={this.handleSecondsInput}
         />
         <h1 className="timer">
-          {`${zero(userMinutes)}${userMinutes} : ${zero(
-            userSeconds,
-          )}${userSeconds}`}
+          {`${zero(userMinutes)}${userMinutes} : ${zero(userSeconds)}${userSeconds}`}
         </h1>
         <div className="progress">
           <Progress

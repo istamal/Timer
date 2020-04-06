@@ -5,7 +5,12 @@ import PropTypes from 'prop-types';
 
 const IntegerStep = (props) => {
   const {
-    isCountdownStarted, handleSlider, handleInput, minutes,
+    isCountdownStarted,
+    handleSlider,
+    handleInput,
+    minutes,
+    seconds,
+    handleInputSeconds,
   } = props;
 
   return (
@@ -13,6 +18,7 @@ const IntegerStep = (props) => {
       <Slider
         disabled={isCountdownStarted}
         min={0}
+        step={15}
         max={720}
         onChange={handleSlider}
         value={minutes}
@@ -26,6 +32,16 @@ const IntegerStep = (props) => {
         value={minutes}
         onChange={handleInput}
       />
+      <input
+        className="custom-input"
+        disabled={isCountdownStarted}
+        min={0}
+        step={15}
+        max={720 * 60}
+        type="number"
+        value={seconds}
+        onChange={handleInputSeconds}
+      />
     </div>
   );
 };
@@ -35,6 +51,8 @@ IntegerStep.propTypes = {
   handleSlider: PropTypes.func.isRequired,
   handleInput: PropTypes.func.isRequired,
   minutes: PropTypes.number.isRequired,
+  seconds: PropTypes.number.isRequired,
+  handleInputSeconds: PropTypes.func.isRequired,
 };
 
 export default IntegerStep;
