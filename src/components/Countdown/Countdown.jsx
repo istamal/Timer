@@ -6,6 +6,7 @@ import IntegerStep from './IntegerStep';
 export default class Countdown extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = React.createRef();
     this.state = {
       isCountdownStarted: false,
       startTime: 0,
@@ -17,11 +18,15 @@ export default class Countdown extends React.Component {
 
   handleSecondsInput = (event) => {
     const { value } = event.target;
-    this.setState({ time: value, startTime: value });
+    const minutes = this.ref.current.value;
+    const time = minutes * 60 + +value;
+    if (+value <= 720 * 60) {
+      this.setState({ time, startTime: time });
+    }
   };
 
   handleMinutesSlider = (value) => {
-    this.setState({ time: value * 60, startTime: value * 60 });
+    this.setState({ time: value, startTime: value });
   };
 
   handleMinutesInput = (event) => {
@@ -95,9 +100,12 @@ export default class Countdown extends React.Component {
     return (
       <div ref={this.wrapper}>
         <IntegerStep
+          ref={this.ref}
+          time={time}
           isCountdownStarted={isCountdownStarted}
           minutes={Math.floor(time / 60)}
-          seconds={time}
+          seconds={time % 60}
+          inputRef={this.inputRef}
           handleSlider={this.handleMinutesSlider}
           handleInput={this.handleMinutesInput}
           handleInputSeconds={this.handleSecondsInput}

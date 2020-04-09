@@ -3,13 +3,14 @@ import 'antd/dist/antd.css';
 import { Slider } from 'antd';
 import PropTypes from 'prop-types';
 
-const IntegerStep = (props) => {
+const IntegerStep = React.forwardRef((props, ref) => {
   const {
     isCountdownStarted,
     handleSlider,
     handleInput,
     minutes,
     seconds,
+    time,
     handleInputSeconds,
   } = props;
 
@@ -19,14 +20,15 @@ const IntegerStep = (props) => {
         disabled={isCountdownStarted}
         min={0}
         step={15}
-        max={720}
+        max={720 * 60}
         onChange={handleSlider}
-        value={minutes}
+        value={time}
       />
       <input
         className="custom-input"
         disabled={isCountdownStarted}
         min={0}
+        ref={ref}
         max={720}
         type="number"
         value={minutes}
@@ -44,9 +46,10 @@ const IntegerStep = (props) => {
       />
     </div>
   );
-};
+});
 
 IntegerStep.propTypes = {
+  time: PropTypes.number.isRequired,
   isCountdownStarted: PropTypes.bool.isRequired,
   handleSlider: PropTypes.func.isRequired,
   handleInput: PropTypes.func.isRequired,
