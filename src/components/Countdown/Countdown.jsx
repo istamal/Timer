@@ -70,7 +70,7 @@ export default class Countdown extends React.Component {
       this.audio.load();
       this.playAudio();
       clearInterval(this.timer);
-      this.setState({ isCountdownStarted: false, startTime: 0, time: 0 });
+      this.setState({ isCountdownStarted: false, time: 0 });
     }
   };
 
