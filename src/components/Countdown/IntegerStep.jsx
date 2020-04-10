@@ -20,7 +20,7 @@ const IntegerStep = React.forwardRef((props, ref) => {
         disabled={isCountdownStarted}
         min={0}
         step={15}
-        max={720 * 60}
+        max={3600}
         onChange={handleSlider}
         value={time}
       />
